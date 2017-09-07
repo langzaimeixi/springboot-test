@@ -21,7 +21,8 @@ public class TradeBaseInfoServiceImpl implements TradeBaseInfoService {
     @Autowired
     private TradeBaseInfoDao tradeBaseInfoDao;
 
-    @CachePut(key = "'test:tradeBaseInfo:costNo:' + costNo")
+    @CachePut(key = "com.lilang.springboot.util.KeyBuildUtil.buildKey(" +
+            "com.lilang.springboot.constant.CacheConstant.TRADE_BASE_PREFIX,costNo)")
     public TradeBaseInfoDO queryTradeBaseInfoByCostNo(@Param("costNo") String costNo) {
         log.info("get from local cache is null, get from db");
         return tradeBaseInfoDao.queryTradeBaseInfoByCostNo(costNo);
