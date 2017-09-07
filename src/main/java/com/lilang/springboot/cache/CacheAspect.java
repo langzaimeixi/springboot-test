@@ -25,14 +25,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ${DESCRIPTION}
+ * 缓存切面，避免业务代码耦合过多的缓存代码
+ *
  * User: lilang
  * Date: 2017/9/6 ProjectName: springboot-test Version：5.0.0
  */
 @Slf4j
 @Aspect
 @Component
-public class CacheMaster {
+public class CacheAspect {
 
     @Autowired
     private LocalCache localCache;
@@ -71,17 +72,22 @@ public class CacheMaster {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
 
-        CacheEvit cacheEvit = method.getAnnotation(CacheEvit.class);
-        Response response = method.getAnnotation(Response.class);
         Map context = new HashMap();
         VariableResolverFactory functionFactory = new MapVariableResolverFactory(context);
         buildContext(jp, method, context);
+
+        Response response = method.getAnnotation(Response.class);
         if (response != null) {
             context.put(response.value(), result);
         }
-        Serializable compileExpression = MVEL.compileExpression(cacheEvit.key());
-        String key = (String) MVEL.executeExpression(compileExpression, context, functionFactory);
-        localCache.evit(key);
+
+        CacheEvit cacheEvit = method.getAnnotation(CacheEvit.class);
+        String[] keys = cacheEvit.keys();
+        for (String keyExpression : keys) {
+            Serializable compileExpression = MVEL.compileExpression(keyExpression);
+            String key = (String) MVEL.executeExpression(compileExpression, context, functionFactory);
+            localCache.evit(key);
+        }
 
     }
 

@@ -30,7 +30,7 @@ public class AlarmConfigServiceImpl implements AlarmConfigService {
     }
 
     @Override
-    @CacheEvit(key = "'ALARM_CONFIG' + alarmConfigDO.alarmType")
+    @CacheEvit(keys = {"'ALARM_CONFIG' + alarmConfigDO.alarmType"})
     public int updateAlarmConfig(@Param("alarmConfigDO") AlarmConfigDO alarmConfigDO) {
         return alarmConfigDao.update(alarmConfigDO);
     }

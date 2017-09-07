@@ -27,7 +27,7 @@ public class TradeBaseInfoServiceImpl implements TradeBaseInfoService {
         return tradeBaseInfoDao.queryTradeBaseInfoByCostNo(costNo);
     }
 
-    @CacheEvit(key = "'test:tradeBaseInfo:costNo:' + baseInfoDO.costNo")
+    @CacheEvit(keys = {"'test:tradeBaseInfo:costNo:' + baseInfoDO.costNo"})
     public @Response("baseInfoDO") TradeBaseInfoDO updateById(@Param("baseInfoDO") TradeBaseInfoDO baseInfoDO)
             throws Exception{
         TradeBaseInfoDO orignBaseInfoDO = tradeBaseInfoDao.getById(baseInfoDO.getId());

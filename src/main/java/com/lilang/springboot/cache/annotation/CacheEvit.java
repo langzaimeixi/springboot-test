@@ -13,7 +13,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface CacheEvit {
 
-    String key() default "";
 
     String[] keys() default {};
 

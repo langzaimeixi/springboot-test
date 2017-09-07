@@ -76,7 +76,12 @@ public class LocalCacheImpl implements LocalCache {
      */
     @Override
     public void evit(String key) {
-        cache2.invalidate(key);
+        try {
+            cache2.invalidate(key);
+        } catch (Exception e) {
+            log.error("evit cache exception, e:", e);
+        }
+
     }
 
     /**
