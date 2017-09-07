@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lilang.springboot.dao.TradeBaseInfoDao">
+    <resultMap id="tradeBaseInfoMap" type="com.lilang.springboot.model.TradeBaseInfoDO">
+        <result column="ID"                     property="id"               jdbcType="INTEGER" />
+        <result column="COST_NO"                property="costNo"           jdbcType="VARCHAR" />
+        <result column="BATCH_NO"               property="batchNo"          jdbcType="VARCHAR" />
+        <result column="COUNTER_NO"             property="counterNo"        jdbcType="VARCHAR" />
+        <result column="CHANNEL_NO"             property="channelNo"        jdbcType="VARCHAR" />
+        <result column="REQUEST_SYSTEM"         property="requestSystem"    jdbcType="VARCHAR" />
+        <result column="ORG_CODE"               property="orgCode"          jdbcType="VARCHAR" />
+        <result column="REQUEST_CHANNEL_NO"     property="requestChannelNo" jdbcType="VARCHAR" />
+        <result column="REQUEST_NO"             property="requestNo"        jdbcType="VARCHAR" />
+        <result column="REQUEST_DATE"           property="requestDate"      jdbcType="TIMESTAMP" />
+        <result column="AMT"                    property="amt"              jdbcType="BIGINT" />
+        <result column="FEE_AMT"                property="feeAmt"           jdbcType="DECIMAL" />
+        <result column="FEE_FLAG"               property="feeFlag"          jdbcType="VARCHAR" />
+        <result column="SYNC_FLAG"              property="syncFlag"         jdbcType="VARCHAR" />
+        <result column="TRADE_ENTITY_TYPE"      property="tradeEntityType"  jdbcType="VARCHAR" />
+        <result column="STATUS"                 property="status"           jdbcType="VARCHAR" />
+        <result column="ERROR_CODE"             property="errorCode"        jdbcType="VARCHAR" />
+        <result column="ERROR_MSG"              property="errorMsg"         jdbcType="VARCHAR" />
+        <result column="TRADE_LOG_ID"           property="tradeLogId"       jdbcType="VARCHAR" />
+        <result column="DESCRIPTION"            property="description"      jdbcType="VARCHAR" />
+        <result column="CREATED_AT"             property="createdAt"        jdbcType="TIMESTAMP" />
+        <result column="CREATED_BY"             property="createdBy"        jdbcType="VARCHAR" />
+        <result column="UPDATED_AT"             property="updatedAt"        jdbcType="TIMESTAMP" />
+        <result column="UPDATED_BY"             property="updatedBy"        jdbcType="VARCHAR" />
+        <result column="USABLE_FLAG"            property="usableFlag"       jdbcType="VARCHAR" />
+        <result column="CCY"                    property="ccy"              jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="TradeBaseInfoDO_Base_Column_List">
+        ID,
+        COST_NO,
+        BATCH_NO,
+        COUNTER_NO,
+        CHANNEL_NO,
+        REQUEST_SYSTEM,
+        ORG_CODE,
+        REQUEST_CHANNEL_NO,
+        REQUEST_NO,
+        REQUEST_DATE,
+        AMT,
+        FEE_AMT,
+        FEE_FLAG,
+        SYNC_FLAG,
+        STATUS,
+        ERROR_CODE,
+        ERROR_MSG,
+        TRADE_ENTITY_TYPE,
+        TRADE_LOG_ID,
+        DESCRIPTION,
+        CREATED_AT,
+        CREATED_BY,
+        UPDATED_AT,
+        UPDATED_BY,
+        USABLE_FLAG,
+        CCY
+    </sql>
+
+    <!-- 新增交易基础信息 -->
+    <insert id="insert" parameterType="com.lilang.springboot.model.TradeBaseInfoDO">
+        /*TradeBaseInfoMapper.insert*/
+        INSERT INTO
+        T_COST_TRADE_BASE_INFO(
+        ID,
+        COST_NO,
+        COUNTER_NO,
+        CHANNEL_NO,
+        REQUEST_SYSTEM,
+        ORG_CODE,
+        REQUEST_CHANNEL_NO,
+        REQUEST_NO,
+        REQUEST_DATE,
+        AMT,
+        FEE_AMT,
+        FEE_FLAG,
+        SYNC_FLAG,
+        STATUS,
+        ERROR_CODE,
+        ERROR_MSG,
+        TRADE_ENTITY_TYPE,
+        TRADE_LOG_ID,
+        DESCRIPTION,
+        CREATED_AT,
+        CREATED_BY,
+        UPDATED_AT,
+        UPDATED_BY,
+        USABLE_FLAG,
+        CCY
+        )
+        VALUES(
+        #{id,                 jdbcType=INTEGER},
+        #{costNo,             jdbcType=VARCHAR},
+        #{counterNo,          jdbcType=VARCHAR},
+        #{channelNo,          jdbcType=VARCHAR},
+        #{requestSystem,      jdbcType=VARCHAR},
+        #{orgCode,            jdbcType=VARCHAR},
+        #{requestChannelNo,   jdbcType=VARCHAR},
+        #{requestNo,     jdbcType=VARCHAR},
+        #{requestDate,        jdbcType=TIMESTAMP},
+        #{amt,                jdbcType=BIGINT},
+        #{feeAmt,             jdbcType=BIGINT},
+        #{feeFlag,            jdbcType=VARCHAR},
+        #{syncFlag,           jdbcType=VARCHAR},
+        #{status,             jdbcType=VARCHAR},
+        #{errorCode,          jdbcType=VARCHAR},
+        #{errorMsg,           jdbcType=VARCHAR},
+        #{tradeEntityType,    jdbcType=VARCHAR},
+        #{tradeLogId,         jdbcType=VARCHAR},
+        #{description,        jdbcType=VARCHAR},
+        now(),
+        #{createdBy,          jdbcType=VARCHAR},
+        now(),
+        #{updatedBy,          jdbcType=VARCHAR},
+        #{usableFlag,         jdbcType=VARCHAR},
+        #{ccy,                jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!-- 更新交易基础信息 -->
+    <update id="update" parameterType="com.lilang.springboot.model.TradeBaseInfoDO">
+        /*TradeBaseInfoMapper.update*/
+        UPDATE
+        T_COST_TRADE_BASE_INFO
+        SET
+        <if test="feeAmt != null">
+            FEE_AMT = #{feeAmt,jdbcType=DECIMAL},
+        </if>
+        <if test="feeFlag != null and feeFlag != ''">
+            FEE_FLAG = #{feeFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="syncFlag != null and syncFlag != ''">
+            SYNC_FLAG = #{syncFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="tradeEntityType != null and tradeEntityType != ''">
+            TRADE_ENTITY_TYPE = #{tradeEntityType, jdbcType=VARCHAR},
+        </if>
+        <if test="errorCode != null and errorCode != ''">
+            ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+        </if>
+        <if test="errorMsg != null and errorMsg != ''">
+            ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+        </if>
+        <if test="updatedBy != null and updatedBy != ''">
+            UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+        </if>
+        UPDATED_AT = now()
+        WHERE
+        ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateBatchNo">
+        /*TradeBaseInfoMapper.updateBatchNo*/
+        UPDATE
+        T_COST_TRADE_BASE_INFO
+        SET
+        BATCH_NO = #{batchNo, jdbcType=VARCHAR},
+        STATUS = 'SUCCESS'
+        WHERE
+        ID in
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateData" parameterType="com.lilang.springboot.model.TradeBaseInfoDO">
+        /*TradeBaseInfoMapper.updateData*/
+        UPDATE
+        T_COST_TRADE_BASE_INFO
+        SET
+        <if test="counterNo != null and counterNo != ''">
+            COUNTER_NO = #{counterNo,jdbcType=VARCHAR},
+        </if>
+        <if test="channelNo != null and channelNo != ''">
+            CHANNEL_NO = #{channelNo,jdbcType=VARCHAR},
+        </if>
+        <if test="requestSystem != null and requestSystem != ''">
+            REQUEST_SYSTEM = #{requestSystem,jdbcType=VARCHAR},
+        </if>
+        <if test="orgCode != null and orgCode != ''">
+            ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+        </if>
+        <if test="requestChannelNo != null and requestChannelNo != ''">
+            REQUEST_CHANNEL_NO = #{requestChannelNo,jdbcType=VARCHAR},
+        </if>
+        <if test="requestNo != null and requestNo != ''">
+            REQUEST_NO = #{requestNo,jdbcType=VARCHAR},
+        </if>
+        <if test="requestDate != null">
+            REQUEST_DATE = #{requestDate,jdbcType=TIMESTAMP},
+        </if>
+        <if test="amt != null">
+            AMT = #{amt,jdbcType=BIGINT},
+        </if>
+        <if test="feeAmt != null">
+            FEE_AMT = #{feeAmt,jdbcType=DECIMAL},
+        </if>
+        <if test="feeFlag != null and feeFlag != ''">
+            FEE_FLAG = #{feeFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="syncFlag != null and syncFlag != ''">
+            SYNC_FLAG = #{syncFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null and status != ''">
+            STATUS = #{status,jdbcType=VARCHAR},
+        </if>
+        <if test="errorCode != null and errorCode != ''">
+            ERROR_CODE = #{errorCode,jdbcType=VARCHAR},
+        </if>
+        <if test="errorMsg != null and errorMsg != ''">
+            ERROR_MSG = #{errorMsg,jdbcType=VARCHAR},
+        </if>
+        <if test="usableFlag != null and usableFlag != ''">
+            USABLE_FLAG = #{usableFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="ccy != null and ccy != ''">
+            CCY = #{ccy,jdbcType=VARCHAR},
+        </if>
+        <if test="tradeEntityType != null and tradeEntityType != ''">
+            TRADE_ENTITY_TYPE = #{tradeEntityType, jdbcType=VARCHAR},
+        </if>
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+        UPDATED_AT = now()
+        WHERE
+        COST_NO = #{costNo,jdbcType=VARCHAR}
+    </update>
+
+
+    <!-- 根据交易单号查询交易基础信息 -->
+    <select id="queryTradeBaseInfoByCostNo" resultMap="tradeBaseInfoMap">
+        /*TradeBaseInfoMapper.queryTradeBaseInfo*/
+        SELECT
+        <include refid="TradeBaseInfoDO_Base_Column_List"/>
+        FROM
+        T_COST_TRADE_BASE_INFO
+        WHERE
+        COST_NO = #{costNo, jdbcType=VARCHAR}
+        AND CREATED_AT <![CDATA[ >=  ]]> DATE_SUB(NOW(), INTERVAL 15 DAY)
+        AND CREATED_AT <![CDATA[ < ]]> NOW()
+    </select>
+
+    <!-- 根据渠道请求单号查询交易基础信息 -->
+    <select id="queryTradeBaseInfoByRequestNo" resultMap="tradeBaseInfoMap">
+        /*TradeBaseInfoMapper.queryTradeBaseInfoByRequestNo*/
+        SELECT
+        <include refid="TradeBaseInfoDO_Base_Column_List"/>
+        FROM
+        T_COST_TRADE_BASE_INFO
+        WHERE
+        REQUEST_NO = #{requestNo, jdbcType=VARCHAR}
+        AND CREATED_AT <![CDATA[ >=  ]]> DATE_SUB(NOW(), INTERVAL 15 DAY)
+        AND CREATED_AT <![CDATA[ < ]]> NOW()
+    </select>
+
+    <select id="getById" resultMap="tradeBaseInfoMap">
+        SELECT
+        <include refid="TradeBaseInfoDO_Base_Column_List"/>
+        FROM
+        T_COST_TRADE_BASE_INFO
+        WHERE
+        ID=#{id}
+    </select>
+
+</mapper>

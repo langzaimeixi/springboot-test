@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lilang.springboot.dao.AlarmConfigDao" >
+  <resultMap id="BaseResultMap" type="AlarmConfigDO" >
+      <result column="ID"             property="id"           jdbcType="INTEGER" />
+      <result column="ALARM_TYPE"     property="alarmType"    jdbcType="VARCHAR" />
+      <result column="ALARM_SUBJECT"  property="alarmSubject" jdbcType="VARCHAR" />
+      <result column="SMS_FLAG"       property="smsFlag"      jdbcType="VARCHAR" />
+      <result column="SMS_RECEIVER"   property="smsReceiver"  jdbcType="VARCHAR" />
+      <result column="MAIL_FLAG"      property="mailFlag"     jdbcType="VARCHAR" />
+      <result column="MAIL_RECEIVER"  property="mailReceiver" jdbcType="VARCHAR" />
+      <result column="DESCRIPTION"    property="description"  jdbcType="VARCHAR" />
+      <result column="CREATED_AT"     property="createdAt"    jdbcType="TIMESTAMP" />
+      <result column="CREATED_BY"     property="createdBy"    jdbcType="VARCHAR" />
+      <result column="UPDATED_AT"     property="updatedAt"    jdbcType="TIMESTAMP" />
+      <result column="UPDATED_BY"     property="updatedBy"    jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ID,
+    ALARM_TYPE,
+    ALARM_SUBJECT,
+    SMS_FLAG,
+    SMS_RECEIVER,
+    MAIL_FLAG,
+    MAIL_RECEIVER,
+    DESCRIPTION,
+    CREATED_AT,
+    CREATED_BY,
+    UPDATED_AT,
+    UPDATED_BY
+  </sql>
+
+
+  <select id="queryAlarmConfigByAlarmType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    /*通过告警类型查询告警配置信息*/
+    SELECT
+      <include refid="Base_Column_List" />
+    FROM
+      T_COST_ALARM_CONFIG
+    WHERE
+      ALARM_TYPE=#{alarmType,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insert" parameterType="AlarmConfigDO" >
+    /*插入报警配置信息*/
+    INSERT INTO
+      T_COST_ALARM_CONFIG (
+      ID,
+      ALARM_TYPE,
+      ALARM_SUBJECT,
+      SMS_FLAG,
+      SMS_RECEIVER,
+      MAIL_FLAG,
+      MAIL_RECEIVER,
+      DESCRIPTION,
+      CREATED_AT,
+      CREATED_BY,
+      UPDATED_AT,
+      UPDATED_BY
+      )
+      VALUES (
+      #{id,jdbcType=INTEGER},
+      #{alarmType,jdbcType=VARCHAR},
+      #{alarmSubject,jdbcType=VARCHAR},
+      #{smsFlag,jdbcType=VARCHAR},
+      #{smsReceiver,jdbcType=VARCHAR},
+      #{mailFlag,jdbcType=VARCHAR},
+      #{mailReceiver,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      now(),
+      #{createdBy,jdbcType=VARCHAR},
+      now(),
+      #{updatedBy,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="update" parameterType="AlarmConfigDO" >
+    /*更新报警配置信息*/
+    UPDATE
+      T_COST_ALARM_CONFIG
+    <set >
+      <if test="alarmSubject != null" >
+        ALARM_SUBJECT = #{alarmSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="smsFlag != null" >
+        SMS_FLAG = #{smsFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="smsReceiver != null" >
+        SMS_RECEIVER = #{smsReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="mailFlag != null" >
+        MAIL_FLAG = #{mailFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mailReceiver != null" >
+        MAIL_RECEIVER = #{mailReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        CREATED_AT = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        UPDATED_AT = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        UPDATED_BY = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ALARM_TYPE = #{alarmType,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

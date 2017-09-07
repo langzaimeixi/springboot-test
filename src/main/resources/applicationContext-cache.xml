@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--切面代理-->
+    <!--<aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+    <cache:annotation-driven />
+    <!--<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="default"/>
+                </bean>
+                <bean class="com.lilang.springboot.localcache.GuavaCache">
+                    <property name="name" value="localCache" />
+                </bean>
+            </set>
+        </property>
+    </bean>-->
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="com.lilang.springboot.localcache.GuavaCache2">
+                    <property name="name" value="localCache"/>
+                    <property name="expireTime" value="24" />
+                    <property name="maxSize" value="200" />
+                    <property name="allowNullValue" value="false"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+</beans>
