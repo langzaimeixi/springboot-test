@@ -13,9 +13,10 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.lilang.springboot.controller," +
-        "com.lilang.springboot.service,com.lilang.springboot.cache,com.lilang.springboot.localcache"})
+        "com.lilang.springboot.service,com.lilang.springboot.cache," +
+        "com.lilang.springboot.lock,com.lilang.springboot.localcache"})
 @MapperScan(basePackages = {"com.lilang.springboot.dao"})
-@ImportResource("classpath:applicationContext*.xml")
+@ImportResource(locations = {"classpath:applicationContext*.xml", "classpath:/spring/spring-redis.xml"})
 public class ApplicationRun  {
 
     public static void main(String[] args) {

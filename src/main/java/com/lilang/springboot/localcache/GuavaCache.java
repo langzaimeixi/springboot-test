@@ -46,10 +46,10 @@ public class GuavaCache implements Cache {
         return null;
     }
 
-    @Override
+   /* @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         return null;
-    }
+    }*/
 
     @Override
     public void put(Object key, Object value) {
